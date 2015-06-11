@@ -12,12 +12,12 @@ ExecStartPre=/usr/bin/env bash -c "etcdctl get /environments/%p > '/tmp/%p.env'"
 
 ExecStartPre=-/usr/bin/env docker stop "%p-%i"
 ExecStartPre=-/usr/bin/env docker rm "%p-%i"
-ExecStartPre=/usr/bin/env docker pull temal/logio-server
+ExecStartPre=/usr/bin/env docker pull christianbladescb/logio-server
 
 ExecStart=/usr/bin/env docker run \
   --name='%p-%i' \
   -v "/tmp/%p.env":"/home/logio/.log.io/log_server.conf" \
   -P \
-  temal/logio-server
+  christianbladescb/logio-server
 
 ExecStop=-/usr/bin/env docker stop "%p-%i"
