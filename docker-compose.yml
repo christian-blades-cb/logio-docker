@@ -1,0 +1,8 @@
+logio:
+  build: .
+  environment:
+    - AUTH_USER=user
+    - AUTH_PASS=pass
+  ports:
+    - 28777:28777
+    - 28778:28778
