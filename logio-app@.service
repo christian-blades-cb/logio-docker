@@ -16,8 +16,9 @@ ExecStartPre=/usr/bin/env docker pull christianbladescb/logio-server
 
 ExecStart=/usr/bin/env docker run \
   --name='%p-%i' \
-  -v "/tmp/%p.env":"/home/logio/.log.io/log_server.conf" \
-  -P \
+  --env-file=/tmp/%p.env \
+  -p 28778 \
+  -p 28777:28777 \
   christianbladescb/logio-server
 
 ExecStop=-/usr/bin/env docker stop "%p-%i"

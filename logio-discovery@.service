@@ -12,7 +12,7 @@ RestartSec=2s
 
 EnvironmentFile=/etc/environment
 
-Environment=EXPOSED_PORT=28777
+Environment=EXPOSED_PORT=28778
 Environment=CONTAINER_NAME=logio-app-%i
 Environment=SERVICE_NAME=logio
 

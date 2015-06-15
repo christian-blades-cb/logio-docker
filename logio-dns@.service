@@ -1,0 +1,27 @@
+[Unit]
+Description=Log.io DNS discovery
+Requires=logio-app@%i.service
+After=logio-app@%i.service
+BindsTo=logio-app@%i.service
+Requires=etcd.service
+After=etcd.service
+
+[Service]
+Restart=on-failure
+RestartSec=2s
+
+EnvironmentFile=/etc/environment
+Environment=EXPOSED_PORT=28777
+Environment=CONTAINER_NAME=logio-app-%i
+Environment=SERVICE_NAME=logio
+
+ExecStart=/usr/bin/bash -c ' \
+  while true; do \
+    etcdctl set /skydns/local/skydns/${SERVICE_NAME}/%i \
+      " { \\"host\\": \\"${COREOS_PRIVATE_IPV4}\\", \\"port\\": ${EXPOSED_PORT} } " --ttl 60; \
+    sleep 30; \
+  done; \
+'
+
+[X-Fleet]
+MachineOf=logio-app@%i.service
